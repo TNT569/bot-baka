@@ -19,7 +19,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev --no-install-project
 
 # 2. 生成 nb-cli 的入口文件 (保持你原有的逻辑)
-RUN python -m uv tool run --no-cache --from nb-cli nb generate -f /tmp/bot.py
+RUN uvx --from nb-cli nb generate -f /tmp/bot.py 
 
 
 # --- 第二阶段：生产镜像 ---
