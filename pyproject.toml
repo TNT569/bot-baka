@@ -1,0 +1,31 @@
+[project]
+name = "bot-baka"
+version = "0.1.0"
+description = "bot-baka"
+readme = "README.md"
+requires-python = ">=3.10, <4.0"
+dependencies = [
+    "nonebot2[fastapi]>=2.5.0",
+    "nonebot-adapter-onebot>=2.4.6",
+    "nonebot-plugin-status>=0.9.0",
+    "nonebot-plugin-nailongremove>=2.3.6.post3",
+]
+
+[tool.nonebot]
+plugin_dirs = []
+builtin_plugins = ["echo"]
+
+[[tool.uv.index]]
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+default = true
+
+[tool.nonebot.adapters]
+nonebot-adapter-onebot = [
+    { name = "OneBot V11", module_name = "nonebot.adapters.onebot.v11" }
+]
+"@local" = []
+
+[tool.nonebot.plugins]
+"@local" = []
+nonebot-plugin-status = ["nonebot_plugin_status"]
+nonebot-plugin-nailongremove = ["nonebot_plugin_nailongremove"]
