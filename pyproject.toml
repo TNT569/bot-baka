@@ -32,8 +32,13 @@ exclude = ["torch", "torchvision", "torchaudio"]
 
 [tool.uv]
 constraint-dependencies = [
-    "torch==2.11.0+cpu",
-    "torchvision==0.26.0+cpu",
+    # 如果是 x86_64 架构（你的 PC），我们要带 +cpu 的版本
+    "torch==2.11.0+cpu; sys_platform == 'linux' and platform_machine == 'x86_64'",
+    "torchvision==0.26.0+cpu; sys_platform == 'linux' and platform_machine == 'x86_64'",
+
+    # 如果是 aarch64 架构（Docker 里的 ARM），我们要不带后缀的版本
+    "torch==2.11.0; sys_platform == 'linux' and platform_machine == 'aarch64'",
+    "torchvision==0.26.0; sys_platform == 'linux' and platform_machine == 'aarch64'",
 ]
 
 [tool.nonebot.adapters]
