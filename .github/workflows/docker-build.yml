@@ -1,0 +1,36 @@
+name: Build ARM64 Docker Image and Save as Artifact
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build ARM64 image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/arm64
+          load: true  # 关键：将镜像加载到本地，而不是推送
+          tags: nonebot-arm64:latest
+
+      - name: Save image to tar file
+        run: |
+          docker save nonebot-arm64:latest -o nonebot-arm64.tar
+          gzip nonebot-arm64.tar  # 压缩以节省空间和传输时间
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nonebot-arm64-image
+          path: nonebot-arm64.tar.gz
+          retention-days: 7  # 保留7天，及时下载
